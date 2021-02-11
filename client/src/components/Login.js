@@ -1,20 +1,20 @@
-import React from 'react';
-import axios from 'axios';
+import React from "react";
+import axiosWithAuth from "../utils/axiosWithAuth";
 
 class Login extends React.Component {
   state = {
     credentials: {
-      username: '',
-      password: ''
-    }
+      username: "",
+      password: "",
+    },
   };
 
-  handleChange = e => {
+  handleChange = (e) => {
     this.setState({
       credentials: {
         ...this.state.credentials,
-        [e.target.name]: e.target.value
-      }
+        [e.target.name]: e.target.value,
+      },
     });
   };
 
@@ -24,17 +24,18 @@ class Login extends React.Component {
     3. output an error when we have an unsuccessful login 
   */
 
-  login = e => {
+  login = (e) => {
     e.preventDefault();
-    axios.post("http://localhost:5000/api/login", this.state.credentials)
+    axiosWithAuth()
+      .post("/login", this.state.credentials)
       .then((res) => {
-        console.log("cd: Login.js: login: res: ", res)
-        localStorage.setItem("token", res.data.payload)
-        this.props.history.push('/protected')
+        console.log("cd: Login.js: login: res: ", res);
+        localStorage.setItem("token", res.data.payload);
+        this.props.history.push("/protected");
       })
       .catch((err) => {
-      console.log("cd: Login.js: login: error: ", err.response.data.error)
-    })
+        console.log("cd: Login.js: login: error: ", err.response.data.error);
+      });
   };
 
   render() {

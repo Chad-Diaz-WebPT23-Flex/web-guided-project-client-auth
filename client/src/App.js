@@ -8,7 +8,7 @@ import PrivateRoute from './components/PrivateRoute';
 
 function App() {
   const logout = () => {
-    
+    localStorage.removeItem('token')
   };
 
 
