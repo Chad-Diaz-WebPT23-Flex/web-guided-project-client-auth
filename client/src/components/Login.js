@@ -18,8 +18,23 @@ class Login extends React.Component {
     });
   };
 
+  /* 
+    1. connect to server with username/password
+    2. store the token that gets passed on successful login
+    3. output an error when we have an unsuccessful login 
+  */
+
   login = e => {
     e.preventDefault();
+    axios.post("http://localhost:5000/api/login", this.state.credentials)
+      .then((res) => {
+        console.log("cd: Login.js: login: res: ", res)
+        localStorage.setItem("token", res.data.payload)
+        this.props.history.push('/protected')
+      })
+      .catch((err) => {
+      console.log("cd: Login.js: login: error: ", err.response.data.error)
+    })
   };
 
   render() {
